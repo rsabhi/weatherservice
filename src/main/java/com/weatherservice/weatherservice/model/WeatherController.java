@@ -14,21 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/temperature")
 @CrossOrigin(origins = "http://localhost:3000")
-class WeatherController {    
+class WeatherController {
+
     private WeatherRepository weatherRepository;
 
     public WeatherController(WeatherRepository weatherRepository) {
         this.weatherRepository = weatherRepository;
     }
 
-    @GetMapping("/weather")
+    @GetMapping("/city")
     Collection<Weather> weather() {
         return (Collection<Weather>) weatherRepository.findAll();
     }
 
-    @PostMapping("/weather")
+    @PostMapping("/city")
     ResponseEntity<Weather> createWeather(@Valid @RequestBody Weather weather) throws URISyntaxException {
         Weather result = weatherRepository.save(weather);
         return ResponseEntity.ok().body(result);

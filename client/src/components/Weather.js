@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import SingleWeather from './SingleWeather';
-import AddWeather from './AddWeather';
+
 
 export default class Weather extends Component {
     constructor(props) {
@@ -11,20 +10,31 @@ export default class Weather extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/weather')
-        .then(response => response.json())
-        .then(data => this.setState({weather: data}))
+        fetch('http://localhost:8080/temperature/city')
+                .then(response => response.json())
+                .then(data => this.setState({weather: data}))
     }
 
     render() {
         return (
-            <div>
-                <div className="row">
-                    { this.state.weather.map((item) => (
-                        <SingleWeather key={item.id} item={item} />
-                    ))}
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>City Name</th>
+                                <th>Temperature</th>
+                            </tr>
+                        </thead><tbody>
+                            {
+                                this.state.weather.map((item) => (
+                                        <tr>
+                                            <td>{item.cityName}</td>
+                                            <td>{item.temperature}°C</td>
+                                        </tr>
+                                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        )
+                )
     }
 }
